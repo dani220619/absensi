@@ -1,7 +1,6 @@
 <?php
 $apl = $this->db->get_where('aplikasi')->row_array();
 
-// dead($apl);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +9,7 @@ $apl = $this->db->get_where('aplikasi')->row_array();
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title><?= $apl['title']; ?> | <?php echo  $this->session->userdata['username']; ?></title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="<?= base_url() ?>/assets/img/icon.ico" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url() ?>assets/foto/logo/<?php echo $apl['logo']; ?>" type="image/x-icon" />
 
     <!-- Fonts and icons -->
     <script src="<?= base_url() ?>/assets/js/plugin/webfont/webfont.min.js"></script>

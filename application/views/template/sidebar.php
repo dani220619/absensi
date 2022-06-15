@@ -53,7 +53,7 @@
                     <div class="collapse" id="tables">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="tables/tables.html">
+                                <a href="<?= base_url('admin/pegawai') ?>">
                                     <span class="sub-item">Data Pegawai</span>
                                 </a>
                             </li>
@@ -154,6 +154,11 @@
                             <li>
                                 <a href="<?= base_url('admin/aplikasi') ?>">
                                     <span class="sub-item">Setting Aplikasi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url('admin/backup_data') ?>">
+                                    <span class="sub-item">Backup Data</span>
                                 </a>
                             </li>
                         </ul>
