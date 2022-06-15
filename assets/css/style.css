@@ -1,0 +1,7 @@
+.background {
+    padding: 11rem 0;
+    background-color: rgba(0, 35, 234, 0.381);
+    background-position: center;
+    background-attachment: scroll;
+    background-size: cover;
+}
