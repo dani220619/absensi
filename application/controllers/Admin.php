@@ -358,6 +358,134 @@ class Admin extends CI_Controller
         </script>");
         redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function backup_data()
+    {
+        $data["title"]         = "Backup Database";
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/backup_data', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function pegawai()
+    {
+        $data['title'] = "Data Pegawai";
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['is_active'] = ['Y', 'N'];
+        $data['user_level'] = $this->Mod_admin->userlevel();
+        $data['pegawai'] = $this->Mod_admin->pegawai()->result();
+        // dead($data['is_active']);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/pegawai', $data);
+        $this->load->view('template/footer');
+    }
+    public function add_pegawai()
+    {
+        $data['title'] = "Data Pegawai";
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        // dead($data['users']);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/add_pegawai', $data);
+        $this->load->view('template/footer');
+    }
+    public function insert_pegawai()
+    {
+        // var_dump($this->input->post('username'));
+        // $this->_validate();
+        $username = $this->input->post('username');
+        $cek = $this->Mod_admin->cekUsername($username);
+        if ($cek->num_rows() > 0) {
+            echo json_encode(array("error" => "Username Sudah Ada!!"));
+        } else {
+            $nama = slug($this->input->post('username'));
+            $config['upload_path']   = './assets/foto/user/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('imagefile')) {
+                $gambar = $this->upload->data();
+
+                $save  = array(
+                    'username' => $this->input->post('username'),
+                    'nama_lengkap' => $this->input->post('nama_lengkap'),
+                    'email' => $this->input->post('email'),
+                    'password'  => get_hash($this->input->post('password')),
+                    'id_level'  => $this->input->post('id_level'),
+                    'tlp'  => $this->input->post('tlp'),
+                    'is_active' => $this->input->post('is_active'),
+                    'date_created' => date("Y-m-d H:i:s"),
+                    'image' => $gambar['file_name']
+                );
+                // dead($save);
+                $this->db->insert("users", $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Admin telah Ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect($_SERVER['HTTP_REFERER']);
+                // echo json_encode(array("status" => TRUE));
+            } else { //Apabila tidak ada gambar yang di upload
+                $save  = array(
+                    'username' => $this->input->post('username'),
+                    'nama_lengkap' => $this->input->post('nama_lengkap'),
+                    'email' => $this->input->post('email'),
+                    'password'  => get_hash($this->input->post('password')),
+                    'tlp'  => $this->input->post('tlp'),
+                    'id_level'  => $this->input->post('id_level'),
+                    'is_active' => $this->input->post('is_active'),
+                    'date_created' => date("Y-m-d H:i:s")
+                );
+                // dead($save);
+                $this->db->insert("users", $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Admin telah Ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect($_SERVER['HTTP_REFERER']);
+                // echo json_encode(array("status" => TRUE));
+            }
+        }
+    }
+
+
+    public function backup()
+    {
+
+        $this->load->dbutil();
+        $data['setting_school'] = "DATA AKN";
+        $prefs = [
+            'format' => 'zip',
+            'filename' => $data['setting_school']['setting_value'] . '-' . date("Y-m-d H-i-s") . '.sql'
+        ];
+        $backup = $this->dbutil->backup($prefs);
+        $file_name = $data['setting_school']['setting_value'] . '-' . date("Y-m-d-H-i-s") . '.zip';
+        $this->zip->download($file_name);
+    }
     public function status_kehadiran()
     {
         $data['users'] = $this->db->get_where(

@@ -64,9 +64,7 @@
             </div>
         </div>
     </div>
-    <div class="custom-toggle">
-        <i class="flaticon-settings"></i>
-    </div>
+
 </div>
 <!-- End Custom template -->
 </div>

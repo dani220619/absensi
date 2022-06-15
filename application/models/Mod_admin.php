@@ -75,4 +75,15 @@ class Mod_admin extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete($table);
     }
+    public function pegawai()
+    {
+        $query = $this->db->query("
+        select u.*, ul.nama_level 
+        from users u
+        left join userlevel ul
+        on u.id_level=ul.id_level
+        where u.id_level = '2'
+        ");
+        return $query;
+    }
 }
