@@ -74,7 +74,7 @@
                     <div class="collapse" id="maps">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="maps/jqvmap.html">
+                                <a href="<?= base_url('admin/status_kehadiran'); ?>">
                                     <span class="sub-item">Status Kehadiran</span>
                                 </a>
                             </li>

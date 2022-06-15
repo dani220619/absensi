@@ -358,4 +358,39 @@ class Admin extends CI_Controller
         </script>");
         redirect($_SERVER['HTTP_REFERER']);
     }
+    public function status_kehadiran()
+    {
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['title'] = 'Status Kehadiran';
+
+        $data['status_kehadiran'] = $this->db->get('status_kehadiran')->result_array();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/status_kehadiran', $data);
+        $this->load->view('template/footer');
+    }
+    public function tambah_status_kehadiran()
+    {
+        $save = [
+            'status_kehadiran' => $this->input->post('status_kehadiran')
+        ];
+
+        $this->db->insert('status_kehadiran', $save);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status kehadiran berhasil ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function edit_status_kehadiran()
+    {
+    }
 }
