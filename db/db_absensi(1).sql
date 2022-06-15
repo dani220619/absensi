@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Waktu pembuatan: 15 Jun 2022 pada 00.57
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 7.4.29
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 15 Jun 2022 pada 18.24
+-- Versi server: 10.4.20-MariaDB
+-- Versi PHP: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,26 +45,32 @@ CREATE TABLE `aplikasi` (
 --
 
 INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `tlp`, `title`, `nama_aplikasi`, `logo`, `copy_right`, `versi`, `tahun`) VALUES
-(1, 'AKN', 'JL. Rawabali', '085797887711', 'ABSENSI', 'ABSENSI', 'dfsafsdf.jpg', 'Copy Right © AKN', '1.0.0.0', 2022);
+(1, 'AKN', 'JL. Rawabali', '085797887711', 'ABSENSI', 'ABSENSI', 'logo_akn_tulisan_putih.png', 'Copy Right © AKN', '1.0.0.0', 2022);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `role`
+-- Struktur dari tabel `status_kehadiran`
 --
 
-CREATE TABLE `role` (
+CREATE TABLE `status_kehadiran` (
   `id` int(11) NOT NULL,
-  `role` varchar(60) NOT NULL
+  `status_kehadiran` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `role`
+-- Dumping data untuk tabel `status_kehadiran`
 --
 
-INSERT INTO `role` (`id`, `role`) VALUES
-(1, 'Admin'),
-(2, 'Pegawai');
+INSERT INTO `status_kehadiran` (`id`, `status_kehadiran`) VALUES
+(1, 'Lupa Absen'),
+(2, 'Ijin Datang Terlambat'),
+(3, 'Ijin Pulang Cepat'),
+(4, 'Mesin Rusak'),
+(5, 'Aplikasi Error'),
+(6, 'Force Majeur'),
+(7, 'Penugasan Kurang dari 8 Jam'),
+(8, 'Keperluan Mendadak');
 
 -- --------------------------------------------------------
 
@@ -82,8 +88,8 @@ CREATE TABLE `userlevel` (
 --
 
 INSERT INTO `userlevel` (`id_level`, `nama_level`) VALUES
-(1, 'admin'),
-(2, 'pegawai');
+(1, 'Admin'),
+(2, 'Pegawai');
 
 -- --------------------------------------------------------
 
@@ -124,9 +130,9 @@ ALTER TABLE `aplikasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `role`
+-- Indeks untuk tabel `status_kehadiran`
 --
-ALTER TABLE `role`
+ALTER TABLE `status_kehadiran`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -152,10 +158,10 @@ ALTER TABLE `aplikasi`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `role`
+-- AUTO_INCREMENT untuk tabel `status_kehadiran`
 --
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `status_kehadiran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `userlevel`
