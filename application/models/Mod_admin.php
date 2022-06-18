@@ -49,6 +49,7 @@ class Mod_admin extends CI_Model
         from users u
         left join userlevel ul
         on u.id_level=ul.id_level
+        where u.id_level = '1'
         ");
         return $query;
     }
