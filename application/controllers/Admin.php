@@ -260,7 +260,7 @@ class Admin extends CI_Controller
                     //hapus gambar yg ada diserver
                     unlink('assets/foto/user/' . $g['image']);
                 }
-                $this->Mod_admin->updateUser($id, $save);
+                $this->Mod_admin->updatepegawai($id, $save);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -295,7 +295,7 @@ class Admin extends CI_Controller
                     );
                 }
                 // dead($save);
-                $this->Mod_admin->updateUser($id, $save);
+                $this->Mod_admin->updatepegawai($id, $save);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -329,7 +329,7 @@ class Admin extends CI_Controller
                 );
             }
             // dead($save);
-            $this->Mod_admin->updateUser($id_user, $save);
+            $this->Mod_admin->updatepegawai($id_user, $save);
             $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -427,13 +427,35 @@ class Admin extends CI_Controller
                 $gambar = $this->upload->data();
 
                 $save  = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
                     'password'  => get_hash($this->input->post('password')),
-                    'id_level'  => $this->input->post('id_level'),
+                    'unit_kerja'  => $this->input->post('unit_kerja'),
+                    'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                    'status_pegawai'  => $this->input->post('status_pegawai'),
+                    'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                    'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                    'taspen'  => $this->input->post('taspen'),
+                    'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                    'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                    'alamat'  => $this->input->post('alamat'),
+                    'kota'  => $this->input->post('kota'),
+                    'provinsi'  => $this->input->post('provinsi'),
+                    'kabupaten'  => $this->input->post('kabupaten'),
+                    'kode_pos'  => $this->input->post('kode_pos'),
+                    'no_wa'  => $this->input->post('no_wa'),
+                    'status_keluarga'  => $this->input->post('status_keluarga'),
+                    'agama'  => $this->input->post('agama'),
+                    'pen_terahir'  => $this->input->post('pen_terahir'),
+                    'jurusan'  => $this->input->post('jurusan'),
+                    'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                    'lulusan'  => $this->input->post('lulusan'),
+                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'is_active' => $this->input->post('is_active'),
+                    'is_active' => 'Y',
                     'date_created' => date("Y-m-d H:i:s"),
                     'image' => $gambar['file_name']
                 );
@@ -445,18 +467,40 @@ class Admin extends CI_Controller
                     icon: 'success'
                     });
                 </script>");
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('admin/pegawai');
                 // echo json_encode(array("status" => TRUE));
             } else { //Apabila tidak ada gambar yang di upload
                 $save  = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
                     'password'  => get_hash($this->input->post('password')),
+                    'unit_kerja'  => $this->input->post('unit_kerja'),
+                    'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                    'status_pegawai'  => $this->input->post('status_pegawai'),
+                    'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                    'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                    'taspen'  => $this->input->post('taspen'),
+                    'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                    'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                    'alamat'  => $this->input->post('alamat'),
+                    'kota'  => $this->input->post('kota'),
+                    'provinsi'  => $this->input->post('provinsi'),
+                    'kabupaten'  => $this->input->post('kabupaten'),
+                    'kode_pos'  => $this->input->post('kode_pos'),
+                    'no_wa'  => $this->input->post('no_wa'),
+                    'status_keluarga'  => $this->input->post('status_keluarga'),
+                    'agama'  => $this->input->post('agama'),
+                    'pen_terahir'  => $this->input->post('pen_terahir'),
+                    'jurusan'  => $this->input->post('jurusan'),
+                    'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                    'lulusan'  => $this->input->post('lulusan'),
+                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'id_level'  => $this->input->post('id_level'),
-                    'is_active' => $this->input->post('is_active'),
-                    'date_created' => date("Y-m-d H:i:s")
+                    'is_active' => 'Y',
+                    'date_created' => date("Y-m-d H:i:s"),
                 );
                 // dead($save);
                 $this->db->insert("users", $save);
@@ -472,10 +516,308 @@ class Admin extends CI_Controller
         }
     }
 
+    public function update_pegawai($id)
+    {
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['pegawai'] = $this->Mod_admin->pegawaiedit($id)->row_array();
+        // dead($data['pegawai']);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/edit_pegawai', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function edit_pegawai()
+    {
+        if (!empty($_FILES['imagefile']['name'])) {
+            // $this->_validate();
+            $id = $this->input->post('id');
+
+            $nama = slug($this->input->post('username'));
+
+            $config['upload_path']   = './assets/foto/user/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('imagefile')) {
+                $gambar = $this->upload->data();
+                //Jika Password tidak kosong
+                if ($this->input->post('password')) {
+                    $save  = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
+                        'username' => $this->input->post('username'),
+                        'nama_lengkap' => $this->input->post('nama_lengkap'),
+                        'email' => $this->input->post('email'),
+                        'password'  => get_hash($this->input->post('password')),
+                        'unit_kerja'  => $this->input->post('unit_kerja'),
+                        'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                        'status_pegawai'  => $this->input->post('status_pegawai'),
+                        'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                        'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                        'taspen'  => $this->input->post('taspen'),
+                        'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                        'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                        'alamat'  => $this->input->post('alamat'),
+                        'kota'  => $this->input->post('kota'),
+                        'provinsi'  => $this->input->post('provinsi'),
+                        'kabupaten'  => $this->input->post('kabupaten'),
+                        'kode_pos'  => $this->input->post('kode_pos'),
+                        'no_wa'  => $this->input->post('no_wa'),
+                        'status_keluarga'  => $this->input->post('status_keluarga'),
+                        'agama'  => $this->input->post('agama'),
+                        'pen_terahir'  => $this->input->post('pen_terahir'),
+                        'jurusan'  => $this->input->post('jurusan'),
+                        'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                        'lulusan'  => $this->input->post('lulusan'),
+                        'id_level'  => '2',
+                        'tlp'  => $this->input->post('tlp'),
+                        'is_active' => 'Y',
+                        'date_created' => date("Y-m-d H:i:s"),
+                        'image' => $gambar['file_name']
+                    );
+                } else { //Jika password kosong
+                    $save  = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
+                        'username' => $this->input->post('username'),
+                        'nama_lengkap' => $this->input->post('nama_lengkap'),
+                        'email' => $this->input->post('email'),
+                        'password'  => get_hash($this->input->post('password')),
+                        'unit_kerja'  => $this->input->post('unit_kerja'),
+                        'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                        'status_pegawai'  => $this->input->post('status_pegawai'),
+                        'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                        'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                        'taspen'  => $this->input->post('taspen'),
+                        'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                        'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                        'alamat'  => $this->input->post('alamat'),
+                        'kota'  => $this->input->post('kota'),
+                        'provinsi'  => $this->input->post('provinsi'),
+                        'kabupaten'  => $this->input->post('kabupaten'),
+                        'kode_pos'  => $this->input->post('kode_pos'),
+                        'no_wa'  => $this->input->post('no_wa'),
+                        'status_keluarga'  => $this->input->post('status_keluarga'),
+                        'agama'  => $this->input->post('agama'),
+                        'pen_terahir'  => $this->input->post('pen_terahir'),
+                        'jurusan'  => $this->input->post('jurusan'),
+                        'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                        'lulusan'  => $this->input->post('lulusan'),
+                        'id_level'  => '2',
+                        'tlp'  => $this->input->post('tlp'),
+                        'is_active' => 'Y',
+                        'date_created' => date("Y-m-d H:i:s"),
+                        'image' => $gambar['file_name']
+                    );
+                }
+                dead($save);
+
+                $g = $this->Mod_admin->getImageuser($id)->row_array();
+
+                if ($g != null) {
+                    //hapus gambar yg ada diserver
+                    unlink('assets/foto/user/' . $g['image']);
+                }
+                $this->Mod_admin->updatepegawai($id, $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Admin telah Diubah',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect($_SERVER['HTTP_REFERER']);
+                // echo json_encode(array("status" => TRUE));
+            } else { //Apabila tidak ada gambar yang di upload
+
+                //Jika Password tidak kosong
+                if ($this->input->post('password')) {
+                    $save  = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
+                        'username' => $this->input->post('username'),
+                        'nama_lengkap' => $this->input->post('nama_lengkap'),
+                        'email' => $this->input->post('email'),
+                        'password'  => get_hash($this->input->post('password')),
+                        'unit_kerja'  => $this->input->post('unit_kerja'),
+                        'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                        'status_pegawai'  => $this->input->post('status_pegawai'),
+                        'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                        'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                        'taspen'  => $this->input->post('taspen'),
+                        'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                        'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                        'alamat'  => $this->input->post('alamat'),
+                        'kota'  => $this->input->post('kota'),
+                        'provinsi'  => $this->input->post('provinsi'),
+                        'kabupaten'  => $this->input->post('kabupaten'),
+                        'kode_pos'  => $this->input->post('kode_pos'),
+                        'no_wa'  => $this->input->post('no_wa'),
+                        'status_keluarga'  => $this->input->post('status_keluarga'),
+                        'agama'  => $this->input->post('agama'),
+                        'pen_terahir'  => $this->input->post('pen_terahir'),
+                        'jurusan'  => $this->input->post('jurusan'),
+                        'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                        'lulusan'  => $this->input->post('lulusan'),
+                        'id_level'  => '2',
+                        'tlp'  => $this->input->post('tlp'),
+                        'is_active' => 'Y',
+                        'date_created' => date("Y-m-d H:i:s"),
+                    );
+                } else { //Jika password kosong
+                    $save  = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
+                        'username' => $this->input->post('username'),
+                        'nama_lengkap' => $this->input->post('nama_lengkap'),
+                        'email' => $this->input->post('email'),
+                        'unit_kerja'  => $this->input->post('unit_kerja'),
+                        'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                        'status_pegawai'  => $this->input->post('status_pegawai'),
+                        'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                        'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                        'taspen'  => $this->input->post('taspen'),
+                        'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                        'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                        'alamat'  => $this->input->post('alamat'),
+                        'kota'  => $this->input->post('kota'),
+                        'provinsi'  => $this->input->post('provinsi'),
+                        'kabupaten'  => $this->input->post('kabupaten'),
+                        'kode_pos'  => $this->input->post('kode_pos'),
+                        'no_wa'  => $this->input->post('no_wa'),
+                        'status_keluarga'  => $this->input->post('status_keluarga'),
+                        'agama'  => $this->input->post('agama'),
+                        'pen_terahir'  => $this->input->post('pen_terahir'),
+                        'jurusan'  => $this->input->post('jurusan'),
+                        'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                        'lulusan'  => $this->input->post('lulusan'),
+                        'id_level'  => '2',
+                        'tlp'  => $this->input->post('tlp'),
+                        'is_active' => 'Y',
+                        'date_created' => date("Y-m-d H:i:s"),
+                    );
+                }
+                dead($save);
+                $this->Mod_admin->updatepegawai($id, $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Admin telah Diubah',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect($_SERVER['HTTP_REFERER']);
+                // echo json_encode(array("status" => TRUE));
+            }
+        } else {
+            $id_user = $this->input->post('id');
+            if ($this->input->post('password')) {
+                $save  = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
+                    'username' => $this->input->post('username'),
+                    'nama_lengkap' => $this->input->post('nama_lengkap'),
+                    'email' => $this->input->post('email'),
+
+                    'unit_kerja'  => $this->input->post('unit_kerja'),
+                    'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                    'status_pegawai'  => $this->input->post('status_pegawai'),
+                    'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                    'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                    'taspen'  => $this->input->post('taspen'),
+                    'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                    'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                    'alamat'  => $this->input->post('alamat'),
+                    'kota'  => $this->input->post('kota'),
+                    'provinsi'  => $this->input->post('provinsi'),
+                    'kabupaten'  => $this->input->post('kabupaten'),
+                    'kode_pos'  => $this->input->post('kode_pos'),
+                    'no_wa'  => $this->input->post('no_wa'),
+                    'status_keluarga'  => $this->input->post('status_keluarga'),
+                    'agama'  => $this->input->post('agama'),
+                    'pen_terahir'  => $this->input->post('pen_terahir'),
+                    'jurusan'  => $this->input->post('jurusan'),
+                    'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                    'lulusan'  => $this->input->post('lulusan'),
+                    'id_level'  => '2',
+                    'tlp'  => $this->input->post('tlp'),
+                    'is_active' => 'Y',
+                    'date_created' => date("Y-m-d H:i:s"),
+                );
+            } else {
+                $save  = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
+                    'username' => $this->input->post('username'),
+                    'nama_lengkap' => $this->input->post('nama_lengkap'),
+                    'email' => $this->input->post('email'),
+                    'unit_kerja'  => $this->input->post('unit_kerja'),
+                    'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
+                    'status_pegawai'  => $this->input->post('status_pegawai'),
+                    'nama_jabatan'  => $this->input->post('nama_jabatan'),
+                    'gol_pangkat'  => $this->input->post('gol_pangkat'),
+                    'taspen'  => $this->input->post('taspen'),
+                    'tempat_lahir'  => $this->input->post('tempat_lahir'),
+                    'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+                    'alamat'  => $this->input->post('alamat'),
+                    'kota'  => $this->input->post('kota'),
+                    'provinsi'  => $this->input->post('provinsi'),
+                    'kabupaten'  => $this->input->post('kabupaten'),
+                    'kode_pos'  => $this->input->post('kode_pos'),
+                    'no_wa'  => $this->input->post('no_wa'),
+                    'status_keluarga'  => $this->input->post('status_keluarga'),
+                    'agama'  => $this->input->post('agama'),
+                    'pen_terahir'  => $this->input->post('pen_terahir'),
+                    'jurusan'  => $this->input->post('jurusan'),
+                    'nama_sekolah'  => $this->input->post('nama_sekolah'),
+                    'lulusan'  => $this->input->post('lulusan'),
+                    'id_level'  => '2',
+                    'tlp'  => $this->input->post('tlp'),
+                    'is_active' => 'Y',
+                    'date_created' => date("Y-m-d H:i:s"),
+                );
+            }
+            // dead($save);
+            $this->Mod_admin->updatepegawai($id_user, $save);
+            $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Admin telah Diubah',
+                    icon: 'success'
+                    });
+                </script>");
+            redirect('admin/pegawai');
+            // echo json_encode(array("status" => TRUE));
+        }
+    }
+
+    public function delete_pegawai($id)
+    {
+
+        $g = $this->Mod_admin->getImageuser($id)->row_array();
+        if ($g != null) {
+            //hapus gambar yg ada diserver
+            unlink('assets/foto/user/' . $g['image']);
+        }
+        $this->Mod_admin->deleteAdmin($id, 'users');
+        $this->session->set_flashdata('success', "<script>
+            swal({
+            text: 'Admin telah dihapus',
+            icon: 'success'
+            });
+        </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 
     public function backup()
     {
-
         $this->load->dbutil();
         $data['setting_school'] = "DATA AKN";
         $prefs = [
@@ -507,7 +849,6 @@ class Admin extends CI_Controller
         $save = [
             'status_kehadiran' => $this->input->post('status_kehadiran')
         ];
-
         $this->db->insert('status_kehadiran', $save);
 
         $this->session->set_flashdata('success', "<script>
