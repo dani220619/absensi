@@ -23,10 +23,10 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="<?= base_url('admin/tambah_status_kehadiran') ?>" method="POST">
+                                            <form action="<?= base_url('admin/tambah_status_ketidakhadiran') ?>" method="POST">
                                                 <div class="form-group">
-                                                    <label for="status_kehadiran">Status Kehadiran</label>
-                                                    <input type="text" class="form-control" id="status_kehadiran" name="status_kehadiran" placeholder="Masukan Status Kehadiran">
+                                                    <label for="status_ketidakhadiran">Status Kehadiran</label>
+                                                    <input type="text" class="form-control" id="status_ketidakhadiran" name="status_ketidakhadiran" placeholder="Masukan Status Ketidakhadiran">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -52,10 +52,10 @@
                                 </thead>
                                 <tbody class="center">
                                     <?php $i = 1;
-                                    foreach ($status_kehadiran as $sk) : ?>
+                                    foreach ($status_ketidakhadiran as $sk) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td style="width: 70%;"><?= $sk['status_kehadiran']; ?></td>
+                                            <td style="width: 65%;"><?= $sk['status_ketidakhadiran']; ?></td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <button data-target="#exampleModal1<?= $sk['id'] ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
@@ -73,10 +73,10 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="<?= base_url('admin/edit_status_kehadiran') ?>" method="POST">
+                                                                    <form action="<?= base_url('admin/edit_status_ketidakhadiran') ?>" method="POST">
                                                                         <div class="form-group">
-                                                                            <label for="status_kehadiran">Status Kehadiran</label>
-                                                                            <input type="text" class="form-control" id="status_kehadiran" name="status_kehadiran" value="<?= $sk['status_kehadiran'] ?>">
+                                                                            <label for="status_ketidakhadiran">Status Kehadiran</label>
+                                                                            <input type="text" class="form-control" id="status_ketidakhadiran" name="status_ketidakhadiran" value="<?= $sk['status_ketidakhadiran'] ?>">
                                                                             <input type="text" class="form-control" id="id" name="id" value="<?= $sk['id'] ?>" hidden>
                                                                         </div>
                                                                 </div>
@@ -88,7 +88,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="<?= base_url('admin/hapus_status_kehadiran/') . $sk['id']; ?>" class="btn btn-link btn-danger btn-lg tombol-hapus"><i class="fa fa-times"></i></a>
+                                                    <a href="<?= base_url('admin/hapus_status_ketidakhadiran/') . $sk['id'] ?>" class="btn btn-link btn-danger btn-lg tombol-hapus"><i class="fa fa-times"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -104,7 +104,7 @@
     </div>
 </div>
 <script src="<?= base_url() ?>assets/js/core/jquery.3.2.1.min.js"></script>
-
+</script>
 <script>
     $(document).ready(function() {
         $('#basic-datatables').DataTable({});

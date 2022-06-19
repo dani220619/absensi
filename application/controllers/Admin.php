@@ -520,5 +520,98 @@ class Admin extends CI_Controller
     }
     public function edit_status_kehadiran()
     {
+        $status_kehadiran = $this->input->post('status_kehadiran');
+        $id = $this->input->post('id');
+        $data = [
+            'status_kehadiran' => $status_kehadiran
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('status_kehadiran', $data);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status kehadiran berhasil diubah',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function hapus_status_kehadiran($id)
+    {
+        $where = ['id' => $id];
+        $this->db->delete('status_kehadiran', $where);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status kehadiran berhasil dihapus',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function status_ketidakhadiran()
+    {
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['title'] = 'Status Ketidakhadiran';
+
+        $data['status_ketidakhadiran'] = $this->db->get('status_ketidakhadiran')->result_array();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/status_ketidakhadiran', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function tambah_status_ketidakhadiran()
+    {
+        $save = [
+            'status_ketidakhadiran' => $this->input->post('status_ketidakhadiran')
+        ];
+
+        $this->db->insert('status_ketidakhadiran', $save);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status ketidakhadiran berhasil ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function edit_status_ketidakhadiran()
+    {
+        $status_ketidakhadiran = $this->input->post('status_ketidakhadiran');
+        $id = $this->input->post('id');
+        $data = [
+            'status_ketidakhadiran' => $status_ketidakhadiran
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('status_ketidakhadiran', $data);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status ketidakhadiran berhasil diubah',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function hapus_status_ketidakhadiran($id)
+    {
+        $where = ['id' => $id];
+        $this->db->delete('status_ketidakhadiran', $where);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Status ketidakhadiran berhasil dihapus',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
     }
 }

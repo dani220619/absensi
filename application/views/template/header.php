@@ -37,6 +37,7 @@ $apl = $this->db->get_where('aplikasi')->row_array();
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/demo.css">
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <?php
 $apl = $this->db->get_where('aplikasi')->row_array();

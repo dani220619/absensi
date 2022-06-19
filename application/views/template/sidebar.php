@@ -79,7 +79,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="maps/jqvmap.html">
+                                <a href="<?= base_url('admin/status_ketidakhadiran') ?>">
                                     <span class="sub-item">Status Ketidakhadiran</span>
                                 </a>
                             </li>
