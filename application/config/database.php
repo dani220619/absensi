@@ -73,12 +73,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+// 'username' => 'posttenc_absensi',
+// 'password' => '~VnF3kJ&d%%o',
+// 'database' => 'posttenc_absensi',
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_absensi',
+	'username' => 'posttenc_absensi',
+	'password' => '~VnF3kJ&d%%o',
+	'database' => 'posttenc_absensi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

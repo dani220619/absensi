@@ -49,6 +49,7 @@ class Mod_admin extends CI_Model
         from users u
         left join userlevel ul
         on u.id_level=ul.id_level
+        where u.id_level = '1'
         ");
         return $query;
     }
@@ -85,5 +86,21 @@ class Mod_admin extends CI_Model
         where u.id_level = '2'
         ");
         return $query;
+    }
+    public function pegawaiedit($id)
+    {
+        $query = $this->db->query("
+        select u.*, ul.nama_level 
+        from users u
+        left join userlevel ul
+        on u.id_level=ul.id_level
+        where u.id_level = '2' and u.nip = '" . $id . "'
+        ");
+        return $query;
+    }
+    function updatepegawai($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
     }
 }
