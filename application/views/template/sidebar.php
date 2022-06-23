@@ -36,135 +36,146 @@
                     </div>
                 </div>
             </div>
-            <ul class="nav nav-primary">
-                <li class="nav-item active">
-                    <a href="#dashboard" class="collapsed" aria-expanded="false">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
+            <?php if ($users['id_level'] == 1) : ?>
+                <ul class="nav nav-primary">
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="collapsed" aria-expanded="false">
+                            <i class="fas fa-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#tables">
-                        <i class="fas fa-table"></i>
-                        <p>Manajemen Pegawai</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="tables">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="<?= base_url('admin/pegawai') ?>">
-                                    <span class="sub-item">Data Pegawai</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tables/datatables.html">
-                                    <span class="sub-item">Jadwal Kerja Pegawai</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#maps">
-                        <i class="fas fa-tasks"></i>
-                        <p>Manajemen Kehadiran</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="maps">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="<?= base_url('admin/status_kehadiran'); ?>">
-                                    <span class="sub-item">Status Kehadiran</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('admin/status_ketidakhadiran') ?>">
-                                    <span class="sub-item">Status Ketidakhadiran</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="maps/jqvmap.html">
-                                    <span class="sub-item">Cuti Online</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="maps/jqvmap.html">
-                                    <span class="sub-item">Dinas Luar Kolektif</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#tables">
+                            <i class="fas fa-table"></i>
+                            <p>Manajemen Pegawai</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="tables">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="<?= base_url('admin/pegawai') ?>">
+                                        <span class="sub-item">Data Pegawai</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tables/datatables.html">
+                                        <span class="sub-item">Jadwal Kerja Pegawai</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#maps">
+                            <i class="fas fa-tasks"></i>
+                            <p>Manajemen Kehadiran</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="maps">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="<?= base_url('admin/status_kehadiran'); ?>">
+                                        <span class="sub-item">Status Kehadiran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url('admin/status_ketidakhadiran') ?>">
+                                        <span class="sub-item">Status Ketidakhadiran</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="maps/jqvmap.html">
+                                        <span class="sub-item">Cuti Online</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="maps/jqvmap.html">
+                                        <span class="sub-item">Dinas Luar Kolektif</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#charts">
-                        <i class="fas fa-chart-pie"></i>
-                        <p>Rekap Kehadiran</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="charts">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="charts/charts.html">
-                                    <span class="sub-item">Presensi Pegawai Perbulan</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="charts/sparkline.html">
-                                    <span class="sub-item">Rekapitulasi Presensi</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#pengaturan">
-                        <i class="fas fa-cog"></i>
-                        <p>Pengaturan</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="pengaturan">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="charts/charts.html">
-                                    <span class="sub-item">Setting Mesin</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="charts/sparkline.html">
-                                    <span class="sub-item">Setting Jam Kerja</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="charts/sparkline.html">
-                                    <span class="sub-item">Setting Mekanisme Unduh Pegawai</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="charts/sparkline.html">
-                                    <span class="sub-item">Setting Hari Libur</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('admin/user') ?>">
-                                    <span class="sub-item">Setting User</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('admin/aplikasi') ?>">
-                                    <span class="sub-item">Setting Aplikasi</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('admin/backup_data') ?>">
-                                    <span class="sub-item">Backup Data</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#charts">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>Rekap Kehadiran</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="charts">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="charts/charts.html">
+                                        <span class="sub-item">Presensi Pegawai Perbulan</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="charts/sparkline.html">
+                                        <span class="sub-item">Rekapitulasi Presensi</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#pengaturan">
+                            <i class="fas fa-cog"></i>
+                            <p>Pengaturan</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="pengaturan">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="charts/charts.html">
+                                        <span class="sub-item">Setting Mesin</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="charts/sparkline.html">
+                                        <span class="sub-item">Setting Jam Kerja</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="charts/sparkline.html">
+                                        <span class="sub-item">Setting Mekanisme Unduh Pegawai</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="charts/sparkline.html">
+                                        <span class="sub-item">Setting Hari Libur</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url('admin/user') ?>">
+                                        <span class="sub-item">Setting User</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url('admin/aplikasi') ?>">
+                                        <span class="sub-item">Setting Aplikasi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url('admin/backup_data') ?>">
+                                        <span class="sub-item">Backup Data</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            <?php else : ?>
+                <ul class="nav nav-primary">
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="collapsed" aria-expanded="false">
+                            <i class="fas fa-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
     <div class="container-fluid">
 
         <div class="collapse" id="search-nav">
-            <form class="navbar-left navbar-form nav-search mr-md-3">
+            <!-- <form class="navbar-left navbar-form nav-search mr-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button type="submit" class="btn btn-search pr-1">
@@ -13,7 +13,7 @@
                     </div>
                     <input type="text" placeholder="Search ..." class="form-control">
                 </div>
-            </form>
+            </form> -->
         </div>
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item toggle-nav-search hidden-caret">

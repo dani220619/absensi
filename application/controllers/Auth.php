@@ -108,7 +108,7 @@ class Auth extends CI_Controller
             $email = $this->input->post('email');
             $username = $this->input->post('username');
             $password =  password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-            $role_id = 3;
+            $id_level = 3;
             $is_active = 0;
             $date_created = time();
             $update_created = time();
@@ -118,7 +118,7 @@ class Auth extends CI_Controller
                 'email' => $email,
                 'username' => $username,
                 'password' => $password,
-                'role_id' => $role_id,
+                'id_level' => $id_level,
                 'is_active' => $is_active,
                 'date_created' => $date_created,
                 'update_created' => $update_created
