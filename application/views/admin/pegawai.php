@@ -56,7 +56,7 @@
                                                       <a href="<?= base_url('admin/update_pegawai/' . $a->nip . '') ?> " type="button" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                           <i class="fa fa-edit"></i>
                                                       </a>
-                                                      <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_pegawai/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
+                                                      <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_pegawai/' . $a->nip) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
                                                   </div>
                                               </td>
                                           </tr>

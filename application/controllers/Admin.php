@@ -408,6 +408,7 @@ class Admin extends CI_Controller
     {
         // var_dump($this->input->post('username'));
         // $this->_validate();
+        $id = rand(000, 999);
         $username = $this->input->post('username');
         $cek = $this->Mod_admin->cekUsername($username);
         if ($cek->num_rows() > 0) {
@@ -427,12 +428,19 @@ class Admin extends CI_Controller
                 $gambar = $this->upload->data();
 
                 $save  = array(
+                    'id' => $id,
                     'nip' => $this->input->post('nip'),
-                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
                     'password'  => get_hash($this->input->post('password')),
+                    'id_level'  => '2',
+                    'is_active' => 'Y',
+                    'image' => $gambar['file_name'],
+                );
+                $save1 = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'unit_kerja'  => $this->input->post('unit_kerja'),
                     'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                     'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -453,14 +461,12 @@ class Admin extends CI_Controller
                     'jurusan'  => $this->input->post('jurusan'),
                     'nama_sekolah'  => $this->input->post('nama_sekolah'),
                     'lulusan'  => $this->input->post('lulusan'),
-                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'is_active' => 'Y',
                     'date_created' => date("Y-m-d H:i:s"),
-                    'image' => $gambar['file_name']
                 );
                 // dead($save);
                 $this->db->insert("users", $save);
+                $this->db->insert("pegawai", $save1);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Ditambahkan',
@@ -471,12 +477,18 @@ class Admin extends CI_Controller
                 // echo json_encode(array("status" => TRUE));
             } else { //Apabila tidak ada gambar yang di upload
                 $save  = array(
+                    'id' => $id,
                     'nip' => $this->input->post('nip'),
-                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
                     'password'  => get_hash($this->input->post('password')),
+                    'id_level'  => '2',
+                    'is_active' => 'Y',
+                );
+                $save1 = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'unit_kerja'  => $this->input->post('unit_kerja'),
                     'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                     'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -497,20 +509,19 @@ class Admin extends CI_Controller
                     'jurusan'  => $this->input->post('jurusan'),
                     'nama_sekolah'  => $this->input->post('nama_sekolah'),
                     'lulusan'  => $this->input->post('lulusan'),
-                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'is_active' => 'Y',
                     'date_created' => date("Y-m-d H:i:s"),
                 );
-                // dead($save);
+                // dead($save1);
                 $this->db->insert("users", $save);
+                $this->db->insert("pegawai", $save1);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Ditambahkan',
                     icon: 'success'
                     });
                 </script>");
-                redirect($_SERVER['HTTP_REFERER']);
+                redirect('admin/pegawai');
                 // echo json_encode(array("status" => TRUE));
             }
         }
@@ -535,7 +546,7 @@ class Admin extends CI_Controller
     {
         if (!empty($_FILES['imagefile']['name'])) {
             // $this->_validate();
-            $id = $this->input->post('id');
+            $nip = $this->input->post('nip');
 
             $nama = slug($this->input->post('username'));
 
@@ -554,11 +565,17 @@ class Admin extends CI_Controller
                 if ($this->input->post('password')) {
                     $save  = array(
                         'nip' => $this->input->post('nip'),
-                        'npwp' => $this->input->post('npwp'),
                         'username' => $this->input->post('username'),
                         'nama_lengkap' => $this->input->post('nama_lengkap'),
                         'email' => $this->input->post('email'),
                         'password'  => get_hash($this->input->post('password')),
+                        'id_level'  => '2',
+                        'is_active' => 'Y',
+                        'image' => $gambar['file_name'],
+                    );
+                    $save1 = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
                         'unit_kerja'  => $this->input->post('unit_kerja'),
                         'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                         'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -579,20 +596,22 @@ class Admin extends CI_Controller
                         'jurusan'  => $this->input->post('jurusan'),
                         'nama_sekolah'  => $this->input->post('nama_sekolah'),
                         'lulusan'  => $this->input->post('lulusan'),
-                        'id_level'  => '2',
                         'tlp'  => $this->input->post('tlp'),
-                        'is_active' => 'Y',
                         'date_created' => date("Y-m-d H:i:s"),
-                        'image' => $gambar['file_name']
                     );
                 } else { //Jika password kosong
                     $save  = array(
                         'nip' => $this->input->post('nip'),
-                        'npwp' => $this->input->post('npwp'),
                         'username' => $this->input->post('username'),
                         'nama_lengkap' => $this->input->post('nama_lengkap'),
                         'email' => $this->input->post('email'),
-                        'password'  => get_hash($this->input->post('password')),
+                        'id_level'  => '2',
+                        'is_active' => 'Y',
+                        'image' => $gambar['file_name'],
+                    );
+                    $save1 = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
                         'unit_kerja'  => $this->input->post('unit_kerja'),
                         'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                         'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -613,22 +632,19 @@ class Admin extends CI_Controller
                         'jurusan'  => $this->input->post('jurusan'),
                         'nama_sekolah'  => $this->input->post('nama_sekolah'),
                         'lulusan'  => $this->input->post('lulusan'),
-                        'id_level'  => '2',
                         'tlp'  => $this->input->post('tlp'),
-                        'is_active' => 'Y',
                         'date_created' => date("Y-m-d H:i:s"),
-                        'image' => $gambar['file_name']
                     );
                 }
-                dead($save);
+                // dead($save);
 
-                $g = $this->Mod_admin->getImageuser($id)->row_array();
-
+                $g = $this->Mod_admin->getImageuser($nip)->row_array();
                 if ($g != null) {
                     //hapus gambar yg ada diserver
                     unlink('assets/foto/user/' . $g['image']);
                 }
-                $this->Mod_admin->updatepegawai($id, $save);
+                $this->Mod_admin->updateuserlev($nip, $save);
+                $this->Mod_admin->updatepegawai($nip, $save1);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -643,11 +659,16 @@ class Admin extends CI_Controller
                 if ($this->input->post('password')) {
                     $save  = array(
                         'nip' => $this->input->post('nip'),
-                        'npwp' => $this->input->post('npwp'),
                         'username' => $this->input->post('username'),
                         'nama_lengkap' => $this->input->post('nama_lengkap'),
                         'email' => $this->input->post('email'),
                         'password'  => get_hash($this->input->post('password')),
+                        'id_level'  => '2',
+                        'is_active' => 'Y',
+                    );
+                    $save1 = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
                         'unit_kerja'  => $this->input->post('unit_kerja'),
                         'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                         'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -668,18 +689,21 @@ class Admin extends CI_Controller
                         'jurusan'  => $this->input->post('jurusan'),
                         'nama_sekolah'  => $this->input->post('nama_sekolah'),
                         'lulusan'  => $this->input->post('lulusan'),
-                        'id_level'  => '2',
                         'tlp'  => $this->input->post('tlp'),
-                        'is_active' => 'Y',
                         'date_created' => date("Y-m-d H:i:s"),
                     );
                 } else { //Jika password kosong
                     $save  = array(
                         'nip' => $this->input->post('nip'),
-                        'npwp' => $this->input->post('npwp'),
                         'username' => $this->input->post('username'),
                         'nama_lengkap' => $this->input->post('nama_lengkap'),
                         'email' => $this->input->post('email'),
+                        'id_level'  => '2',
+                        'is_active' => 'Y',
+                    );
+                    $save1 = array(
+                        'nip' => $this->input->post('nip'),
+                        'npwp' => $this->input->post('npwp'),
                         'unit_kerja'  => $this->input->post('unit_kerja'),
                         'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                         'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -700,14 +724,13 @@ class Admin extends CI_Controller
                         'jurusan'  => $this->input->post('jurusan'),
                         'nama_sekolah'  => $this->input->post('nama_sekolah'),
                         'lulusan'  => $this->input->post('lulusan'),
-                        'id_level'  => '2',
                         'tlp'  => $this->input->post('tlp'),
-                        'is_active' => 'Y',
                         'date_created' => date("Y-m-d H:i:s"),
                     );
                 }
                 dead($save);
-                $this->Mod_admin->updatepegawai($id, $save);
+                $this->Mod_admin->updateuserlev($nip, $save);
+                $this->Mod_admin->updateuserlev($nip, $save1);
                 $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -718,15 +741,20 @@ class Admin extends CI_Controller
                 // echo json_encode(array("status" => TRUE));
             }
         } else {
-            $id_user = $this->input->post('id');
+            $nip = $this->input->post('nip');
             if ($this->input->post('password')) {
                 $save  = array(
                     'nip' => $this->input->post('nip'),
-                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
-
+                    'password'  => get_hash($this->input->post('password')),
+                    'id_level'  => '2',
+                    'is_active' => 'Y',
+                );
+                $save1 = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'unit_kerja'  => $this->input->post('unit_kerja'),
                     'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                     'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -747,18 +775,21 @@ class Admin extends CI_Controller
                     'jurusan'  => $this->input->post('jurusan'),
                     'nama_sekolah'  => $this->input->post('nama_sekolah'),
                     'lulusan'  => $this->input->post('lulusan'),
-                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'is_active' => 'Y',
                     'date_created' => date("Y-m-d H:i:s"),
                 );
             } else {
                 $save  = array(
                     'nip' => $this->input->post('nip'),
-                    'npwp' => $this->input->post('npwp'),
                     'username' => $this->input->post('username'),
                     'nama_lengkap' => $this->input->post('nama_lengkap'),
                     'email' => $this->input->post('email'),
+                    'id_level'  => '2',
+                    'is_active' => 'Y',
+                );
+                $save1 = array(
+                    'nip' => $this->input->post('nip'),
+                    'npwp' => $this->input->post('npwp'),
                     'unit_kerja'  => $this->input->post('unit_kerja'),
                     'sub_unit_kerja'  => $this->input->post('sub_unit_kerja'),
                     'status_pegawai'  => $this->input->post('status_pegawai'),
@@ -779,14 +810,13 @@ class Admin extends CI_Controller
                     'jurusan'  => $this->input->post('jurusan'),
                     'nama_sekolah'  => $this->input->post('nama_sekolah'),
                     'lulusan'  => $this->input->post('lulusan'),
-                    'id_level'  => '2',
                     'tlp'  => $this->input->post('tlp'),
-                    'is_active' => 'Y',
                     'date_created' => date("Y-m-d H:i:s"),
                 );
             }
-            // dead($save);
-            $this->Mod_admin->updatepegawai($id_user, $save);
+            // dead($save1);
+            $this->Mod_admin->updateuserlev($nip, $save);
+            $this->Mod_admin->updatepegawai($nip, $save1);
             $this->session->set_flashdata('success', "<script>
                     swal({
                     text: 'Admin telah Diubah',
@@ -798,15 +828,16 @@ class Admin extends CI_Controller
         }
     }
 
-    public function delete_pegawai($id)
+    public function delete_pegawai($nip)
     {
 
-        $g = $this->Mod_admin->getImageuser($id)->row_array();
+        $g = $this->Mod_admin->getImageuser($nip)->row_array();
         if ($g != null) {
             //hapus gambar yg ada diserver
             unlink('assets/foto/user/' . $g['image']);
         }
-        $this->Mod_admin->deleteAdmin($id, 'users');
+        $this->db->delete('users', array('nip' => $nip));
+        $this->db->delete('pegawai', array('nip' => $nip));
         $this->session->set_flashdata('success', "<script>
             swal({
             text: 'Admin telah dihapus',
