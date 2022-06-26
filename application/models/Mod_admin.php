@@ -110,4 +110,27 @@ class Mod_admin extends CI_Model
         $this->db->where('nip', $id);
         $this->db->update('pegawai', $data);
     }
+    public function jadwal_kerja()
+    {
+        $query = $this->db->query("
+        select * from jadwal_kerja
+        ");
+        return $query;
+    }
+    public function presensi()
+    {
+        $query = $this->db->query("
+        select * from presensi
+        ");
+        return $query;
+    }
+    public function cekpresensi($id, $id_user, $status_presensi, $tanggal_waktu)
+    {
+        $query = $this->db->query("
+        select * 
+        from presensi 
+        where = '" . $id . "' and '" . $id_user . "' and '" . $$status_presensi . "' and '" . $tanggal_waktu . "'
+        ");
+        return $query;
+    }
 }

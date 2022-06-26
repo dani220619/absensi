@@ -847,6 +847,125 @@ class Admin extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
+    public function jadwal_kerja()
+    {
+        $data['title'] = "Jadwal Kerja Pegawai";
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['jadwal_kerja'] = $this->Mod_admin->jadwal_kerja()->result();
+        // dead($data['is_active']);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/jadwal_kerja', $data);
+        $this->load->view('template/footer');
+    }
+    public function insert_jadwal_kerja()
+    {
+        $save = [
+            'id' => rand(00, 99),
+            'hari' => $this->input->post('hari'),
+            'jam_masuk' => $this->input->post('jam_masuk'),
+            'jam_keluar' => $this->input->post('jam_keluar')
+        ];
+        // dead($save);
+        $this->db->insert('jadwal_kerja', $save);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jadwal Kerja berhasil ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function update_jadwal_kerja()
+    {
+        $id = $this->input->post('id');
+        $data = [
+            'hari' => $this->input->post('hari'),
+            'jam_masuk' => $this->input->post('jam_masuk'),
+            'jam_keluar' => $this->input->post('jam_keluar')
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('jadwal_kerja', $data);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jadwal Kerja berhasil diubah',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function delete_jadwal_kerja($id)
+    {
+        $this->db->delete('jadwal_kerja', array('id' => $id));
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jadwal Kerja berhasil dihapus',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function presensi()
+    {
+        $data['title'] = "Presensi Pegawai";
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['presensi'] = $this->Mod_admin->presensi()->result();
+        // dead($data['is_active']);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/presensi', $data);
+        $this->load->view('template/footer');
+    }
+    public function tarik_presensi()
+    {
+
+        require 'application/libraries/zklibrary/zklibrary.php';
+        $zk = new ZKLibrary('192.168.1.219', 4370);
+        $zk->connect();
+        $zk->disableDevice();
+
+
+        $data = $zk->getAttendance();
+        print_r($data);
+
+        $id = $data['id'];
+        $id_user = $data['id_user'];
+        $status_presensi = $data['status_presensi'];
+        $tanggal_waktu = $data['tanggal_waktu'];
+
+        $presensi = $this->Mod_admin->cekpresensi($id, $id_user, $status_presensi, $tanggal_waktu)->row();
+        $validasi = $presensi->num_rows;
+
+        if ($validasi > 0) {
+            echo " DATA SUDAH ADA";
+            redirect($_SERVER['REQUEST_URI'], 'refresh');
+        } else {
+            $save = array(
+                'id' => $id,
+                'id_user' => $id_user,
+                'status_presensi' => $status_presensi,
+                'tanggal_waktu' => $tanggal_waktu,
+            );
+            $this->db->insert('presensi', $save);
+        }
+
+        $zk->enableDevice();
+        redirect('admin/presensi');
+    }
+
     public function backup()
     {
         $this->load->dbutil();
