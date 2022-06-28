@@ -533,6 +533,9 @@ class Admin extends CI_Controller
             'users',
             ['username' => $this->session->userdata('username')]
         )->row_array();
+        $data['status'] = ['pns', 'non pns'];
+        $data['jen_kelamin'] = ['laki-laki', 'perempuan'];
+        $data['agama'] = ['Islam', 'Protestan', 'Katolik', 'Hindu', 'Buddha', 'Khonghucu'];
         $data['pegawai'] = $this->Mod_admin->pegawaiedit($id)->row_array();
         // dead($data['pegawai']);
         $this->load->view('template/header', $data);
@@ -931,7 +934,6 @@ class Admin extends CI_Controller
     }
     public function tarik_presensi()
     {
-
         require 'application/libraries/zklibrary/zklibrary.php';
         $zk = new ZKLibrary('192.168.1.219', 4370);
         $zk->connect();

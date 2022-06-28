@@ -39,7 +39,7 @@
             <?php if ($users['id_level'] == 1) : ?>
                 <ul class="nav nav-primary">
                     <li class="nav-item active">
-                        <a href="#dashboard" class="collapsed" aria-expanded="false">
+                        <a href="<?= base_url('admin/index') ?>" class="collapsed" aria-expanded="false">
                             <i class="fas fa-home"></i>
                             <p>Dashboard</p>
                         </a>
