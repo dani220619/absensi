@@ -943,10 +943,10 @@ class Admin extends CI_Controller
         $data = $zk->getAttendance();
         print_r($data);
 
-        $id = $data['id'];
-        $id_user = $data['id_user'];
-        $status_presensi = $data['status_presensi'];
-        $tanggal_waktu = $data['tanggal_waktu'];
+        $id = $data[0];
+        $id_user = $data[1];
+        $status_presensi = $data[2];
+        $tanggal_waktu = $data[3];
 
         $presensi = $this->Mod_admin->cekpresensi($id, $id_user, $status_presensi, $tanggal_waktu)->row();
         $validasi = $presensi->num_rows;
@@ -963,7 +963,6 @@ class Admin extends CI_Controller
             );
             $this->db->insert('presensi', $save);
         }
-
         $zk->enableDevice();
         redirect('admin/presensi');
     }
