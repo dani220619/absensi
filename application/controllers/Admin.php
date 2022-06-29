@@ -955,4 +955,83 @@ class Admin extends CI_Controller
                 </script>");
         redirect($_SERVER['HTTP_REFERER']);
     }
+    public function cuti()
+    {
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['title'] = 'Jenis Cuti';
+
+        $data['jenis_cuti'] = $this->db->get('jenis_cuti')->result_array();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/cuti', $data);
+        $this->load->view('template/footer');
+    }
+
+    public function tambah_jenis_cuti()
+    {
+        $save = [
+            'jenis_cuti' => $this->input->post('jenis_cuti')
+        ];
+
+        $this->db->insert('jenis_cuti', $save);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jenis Cuti berhasil ditambahkan',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function edit_jenis_cuti()
+    {
+        $jenis_cuti = $this->input->post('jenis_cuti');
+        $id = $this->input->post('id');
+        $data = [
+            'jenis_cuti' => $jenis_cuti
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('jenis_cuti', $data);
+
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jenis Cuti berhasil diubah',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function hapus_jenis_cuti($id)
+    {
+        $where = ['id' => $id];
+        $this->db->delete('jenis_cuti', $where);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Jenis Cuti berhasil dihapus',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function ajukan_cuti()
+    {
+        $data['jenis_cuti'] = $this->db->get('jenis_cuti')->result_array();
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+        $data['title'] = 'Pengajuan Cuti';
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/ajukan_cuti', $data);
+        $this->load->view('template/footer');
+    }
 }

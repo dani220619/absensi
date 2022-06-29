@@ -85,7 +85,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="maps/jqvmap.html">
+                                    <a href="<?= base_url('admin/cuti') ?>">
                                         <span class="sub-item">Cuti Online</span>
                                     </a>
                                 </li>
