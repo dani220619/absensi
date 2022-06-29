@@ -39,7 +39,7 @@
             <?php if ($users['id_level'] == 1) : ?>
                 <ul class="nav nav-primary">
                     <li class="nav-item active">
-                        <a href="#dashboard" class="collapsed" aria-expanded="false">
+                        <a href="<?= base_url('admin/index') ?>" class="collapsed" aria-expanded="false">
                             <i class="fas fa-home"></i>
                             <p>Dashboard</p>
                         </a>
@@ -59,7 +59,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="tables/datatables.html">
+                                    <a href="<?= base_url('admin/jadwal_kerja') ?>">
                                         <span class="sub-item">Jadwal Kerja Pegawai</span>
                                     </a>
                                 </li>
@@ -106,6 +106,11 @@
                         </a>
                         <div class="collapse" id="charts">
                             <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="<?= base_url('admin/presensi') ?>">
+                                        <span class="sub-item">Presensi</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="charts/charts.html">
                                         <span class="sub-item">Presensi Pegawai Perbulan</span>

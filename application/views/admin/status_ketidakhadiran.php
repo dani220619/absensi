@@ -158,7 +158,6 @@
         e.preventDefault();
 
         const href = $(this).attr('href');
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

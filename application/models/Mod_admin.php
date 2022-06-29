@@ -63,7 +63,7 @@ class Mod_admin extends CI_Model
     {
         $this->db->select('image');
         $this->db->from('users');
-        $this->db->where('id', $id);
+        $this->db->where('nip', $id);
         return $this->db->get();
     }
     function updateUser($id, $data)
@@ -90,17 +90,47 @@ class Mod_admin extends CI_Model
     public function pegawaiedit($id)
     {
         $query = $this->db->query("
-        select u.*, ul.nama_level 
+        select u.*, ul.nama_level, p.*
         from users u
         left join userlevel ul
         on u.id_level=ul.id_level
+        left join pegawai p 
+        on u.nip=p.nip
         where u.id_level = '2' and u.nip = '" . $id . "'
         ");
         return $query;
     }
+    function updateuserlev($id, $data)
+    {
+        $this->db->where('nip', $id);
+        $this->db->update('users', $data);
+    }
     function updatepegawai($id, $data)
     {
-        $this->db->where('id', $id);
-        $this->db->update('users', $data);
+        $this->db->where('nip', $id);
+        $this->db->update('pegawai', $data);
+    }
+    public function jadwal_kerja()
+    {
+        $query = $this->db->query("
+        select * from jadwal_kerja
+        ");
+        return $query;
+    }
+    public function presensi()
+    {
+        $query = $this->db->query("
+        select * from presensi
+        ");
+        return $query;
+    }
+    public function cekpresensi($id, $id_user, $status_presensi, $tanggal_waktu)
+    {
+        $query = $this->db->query("
+        select * 
+        from presensi 
+        where = '" . $id . "' and '" . $id_user . "' and '" . $$status_presensi . "' and '" . $tanggal_waktu . "'
+        ");
+        return $query;
     }
 }

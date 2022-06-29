@@ -71,9 +71,11 @@
                                         <label>STATUS PEGAWAI</label>
                                         <div class="col-md-12 col-lg-12 kosong">
                                             <select class="form-control" name="status_pegawai" id="status_pegawai">
-                                                <option value=""></option>
-                                                <option value="pns">PNS</option>
-                                                <option value="non pns">NON PNS</option>
+                                                <option value="<?php $pegawai['status_pegawai'] ?>" selected="selected"></option>
+                                                <?php
+                                                foreach ($status as $level) { ?>
+                                                    <option <?= ($level == $pegawai['status_pegawai'] ? 'selected=""' : '') ?> value="<?= $level; ?>"><?= $level; ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
@@ -111,9 +113,11 @@
                                         <label>JENIS KELAMIN</label>
                                         <div class="col-md-12 col-lg-12 kosong">
                                             <select class="form-control" name="jenis_kelamin" id="jenis_kelamin">
-                                                <option value=""></option>
-                                                <option value="laki-laki">Laki-Laki</option>
-                                                <option value="perempuan">Perempuan</option>
+                                                <option value="<?php $pegawai['jenis_kelamin'] ?>" selected="selected"></option>
+                                                <?php
+                                                foreach ($jen_kelamin as $level) { ?>
+                                                    <option <?= ($level == $pegawai['jenis_kelamin'] ? 'selected=""' : '') ?> value="<?= $level; ?>"><?= $level; ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
@@ -177,15 +181,13 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>AGAMA</label>
-                                        <div class="col-md-12 col-lg-12 kosong">
+                                        <div class="col-md-12 col-lg-12">
                                             <select class="form-control" name="agama" id="agama">
-                                                <option value=""></option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Protestan">Protestan</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Buddha">Buddha</option>
-                                                <option value="Khonghucu">Khonghucu</option>
+                                                <option value="<?php $pegawai['agama'] ?>" selected="selected"></option>
+                                                <?php
+                                                foreach ($agama as $level) { ?>
+                                                    <option <?= ($level == $pegawai['agama'] ? 'selected=""' : '') ?> value="<?= $level; ?>"><?= $level; ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
