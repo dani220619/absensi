@@ -133,4 +133,34 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
+    public function cuti()
+    {
+        $sql = "SELECT users.nip, users.nama_lengkap 
+                FROM users, jenis_cuti, cuti, pegawai
+                WHERE users.id = cuti.id_user
+                AND jenis_cuti.id = cuti.id_jenis_cuti
+                AND users.nip = pegawai.nip";
+
+        $query = $this->db->query($sql)->result_array();
+
+        return $query;
+    }
+    public function get_pegawai()
+    {
+        $this->db->select('users.id, users.nip,users.nama_lengkap, jenis_cuti.jenis_cuti, cuti.status_cuti');
+        $this->db->from('users');
+        $this->db->join('pegawai', 'users.nip = pegawai.nip');
+        $this->db->join('cuti', 'cuti.id_user = users.id');
+        $this->db->join('jenis_cuti', 'jenis_cuti.id = cuti.id_jenis_cuti');
+        $query = $this->db->get();
+        return $query;
+    }
+    public function get_pegawai1()
+    {
+        $this->db->select('users.id, users.nip,users.nama_lengkap');
+        $this->db->from('users');
+        $this->db->join('pegawai', 'users.nip = pegawai.nip');
+        $query = $this->db->get();
+        return $query;
+    }
 }

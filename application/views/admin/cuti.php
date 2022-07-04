@@ -38,25 +38,37 @@
                             <table id="basic-datatables" class="display table table-striped table-hover">
                                 <thead class="center">
                                     <tr>
-                                        <th>No</th>
-                                        <th>Jenis Cuti</th>
-                                        <th>Action</th>
+                                        <th>NO</th>
+                                        <th>NIP</th>
+                                        <th>NAMA LENGKAP</th>
+                                        <th>JENIS CUTI</th>
+                                        <th>STATUS CUTI</th>
+                                        <th>ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody class="center">
-                                    <?php $i = 1;
-                                    foreach ($jenis_cuti as $jc) : ?>
+                                    <?php $no = 1;
+                                    foreach ($pegawai as $pgw) : ?>
                                         <tr>
-                                            <td><?= $i; ?></td>
-                                            <td style="width: 65%;"><?= $jc['jenis_cuti']; ?></td>
+                                            <td><?= $no; ?></td>
+                                            <td><?= $pgw['nip']; ?></td>
+                                            <td><?= $pgw['nama_lengkap']; ?></td>
+                                            <td><?= $pgw['jenis_cuti'] ?></td>
+                                            <?php if ($pgw['status_cuti'] == 0) : ?>
+                                                <td><span class="badge badge-danger">Belum Upload</span></td>
+                                            <?php elseif ($pgw['status_cuti'] == 2) : ?>
+                                                <td><span class="badge badge-danger">Pending</span></td>
+                                            <?php else : ?>
+                                                <td><span class="badge badge-danger">Disetujui</span></td>
+                                            <?php endif; ?>
                                             <td>
-                                                <div class="form-button-action">
-                                                    <button data-target="#exampleModal3<?= $jc['id'] ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
+                                                <div class="form-button-action text-center">
+                                                    <a href="#" data-target="#exampleModal3" type="button" data-toggle="modal" title="Edit Data" class="text-primary">
+                                                        <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Data"></i>
+                                                    </a>
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal3<?= $jc['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                                                    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -66,11 +78,11 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="<?= base_url('admin/edit_jenis_cuti') ?>" method="POST">
+                                                                    <form action="" method="POST">
                                                                         <div class="form-group">
                                                                             <label for="jenis_cuti">Jenis Cuti</label>
-                                                                            <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" value="<?= $jc['jenis_cuti'] ?>">
-                                                                            <input type="text" class="form-control" id="id" name="id" value="<?= $jc['id'] ?>" hidden>
+                                                                            <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" value="">
+                                                                            <input type="text" class="form-control" id="id" name="id" value="" hidden>
                                                                         </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -81,11 +93,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="<?= base_url('admin/hapus_jenis_cuti/') . $jc['id'] ?>" class="btn btn-link btn-danger btn-lg tombol-hapus"><i class="fa fa-times"></i></a>
+                                                    <a href="" class="text-danger mx-3" data-toggle="tooltip" data-placement="top" title="Hapus Data"><i class="fa fa-times"></i></a>
+                                                    <a href="" class="text-warning" data-toggle="tooltip" data-placement="top" title="Detail Data"><i class="fas fa-eye"></i></a>
+                                                    <?php if ($pgw['status_cuti'] == 0) : ?>
+                                                        <a href="" class="text-secondary ml-3" data-toggle="tooltip" data-placement="top" title="Upload Data"><i class="fas fa-upload"></i></a>
+                                                    <?php endif; ?>
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php $i++;
+                                    <?php $no++;
                                     endforeach; ?>
                                 </tbody>
                             </table>
@@ -115,7 +131,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="<?= base_url('admin/tambah_jenis_cuti') ?>" method="POST">
+                                            <form action="" method="POST">
                                                 <div class="form-group">
                                                     <label for="jenis_cuti">Jenis Cuti</label>
                                                     <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" placeholder="Masukan Jenis Cuti">
@@ -143,49 +159,45 @@
                                     </tr>
                                 </thead>
                                 <tbody class="center">
-                                    <?php $i = 1;
-                                    foreach ($jenis_cuti as $jc) : ?>
-                                        <tr>
-                                            <td><?= $i; ?></td>
-                                            <td style="width: 65%;"><?= $jc['jenis_cuti']; ?></td>
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <button data-target="#exampleModal1<?= $jc['id'] ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
+                                    <tr>
+                                        <td></td>
+                                        <td style="width: 65%;"></td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <button data-target="#exampleModal1" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal1<?= $jc['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Jenis Cuti</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form action="<?= base_url('admin/edit_jenis_cuti') ?>" method="POST">
-                                                                        <div class="form-group">
-                                                                            <label for="jenis_cuti">Jenis Cuti</label>
-                                                                            <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" value="<?= $jc['jenis_cuti'] ?>">
-                                                                            <input type="text" class="form-control" id="id" name="id" value="<?= $jc['id'] ?>" hidden>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                                </div>
-                                                                </form>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Jenis Cuti</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
+                                                            <div class="modal-body">
+                                                                <form action="" method="POST">
+                                                                    <div class="form-group">
+                                                                        <label for="jenis_cuti">Jenis Cuti</label>
+                                                                        <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" value="">
+                                                                        <input type="text" class="form-control" id="id" name="id" value="" hidden>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <a href="<?= base_url('admin/hapus_jenis_cuti/') . $jc['id'] ?>" class="btn btn-link btn-danger btn-lg tombol-hapus"><i class="fa fa-times"></i></a>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    <?php $i++;
-                                    endforeach; ?>
+                                                <a href="" class="btn btn-link btn-danger btn-lg tombol-hapus"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

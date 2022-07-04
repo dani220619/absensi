@@ -1109,13 +1109,15 @@ class Admin extends CI_Controller
     }
     public function cuti()
     {
+        $data['pegawai'] = $this->Mod_admin->get_pegawai()->result_array();
         $data['users'] = $this->db->get_where(
             'users',
             ['username' => $this->session->userdata('username')]
         )->row_array();
         $data['title'] = 'Jenis Cuti';
 
-        $data['jenis_cuti'] = $this->db->get('jenis_cuti')->result_array();
+        $data['cuti'] = $this->Mod_admin->cuti();
+
 
         $this->load->view('template/header', $data);
         $this->load->view('template/topbar', $data);
@@ -1174,16 +1176,64 @@ class Admin extends CI_Controller
     public function ajukan_cuti()
     {
         $data['jenis_cuti'] = $this->db->get('jenis_cuti')->result_array();
+        $data['pegawai'] = $this->Mod_admin->get_pegawai1()->result_array();
         $data['users'] = $this->db->get_where(
             'users',
             ['username' => $this->session->userdata('username')]
         )->row_array();
         $data['title'] = 'Pengajuan Cuti';
 
-        $this->load->view('template/header', $data);
-        $this->load->view('template/topbar', $data);
-        $this->load->view('template/sidebar', $data);
-        $this->load->view('admin/ajukan_cuti', $data);
-        $this->load->view('template/footer');
+        $this->form_validation->set_rules('nama_pegawai[]', 'Nama Lengkap', 'required|trim');
+        $this->form_validation->set_rules('jenis_cuti', 'Jenis Cuti', 'required|trim');
+        $this->form_validation->set_rules('alasan_cuti', 'Alasan Cuti', 'required|trim');
+        $this->form_validation->set_rules('selama', 'Lama Waktu Cuti', 'required|trim');
+        $this->form_validation->set_rules('mulai_tanggal', 'Mulai Tanggal', 'required|trim');
+        $this->form_validation->set_rules('sampai_tanggal', 'Sampai Tanggal', 'required|trim');
+        $this->form_validation->set_rules('alamat_menjalankan_cuti', 'Alamat Menjalankan Cuti', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/topbar', $data);
+            $this->load->view('template/sidebar', $data);
+            $this->load->view('admin/ajukan_cuti', $data);
+            $this->load->view('template/footer');
+        } else {
+            $nama_pegawai = $this->input->post('nama_pegawai[]');
+            $jenis_cuti = $this->input->post('jenis_cuti');
+            $alasan_cuti = $this->input->post('alasan_cuti');
+            $selama = $this->input->post('selama');
+            $mulai_tanggal = $this->input->post('mulai_tanggal');
+            $sampai_tanggal = $this->input->post('sampai_tanggal');
+            $alamat_menjalankan_cuti = $this->input->post('alamat_menjalankan_cuti');
+
+
+            foreach ($nama_pegawai as $np) {
+
+                $data = [
+                    'id_jenis_cuti' => $jenis_cuti,
+                    'id_user' => $np,
+                    'alasan_cuti' => $alasan_cuti,
+                    'selama' => $selama,
+                    'mulai_tanggal' => $mulai_tanggal,
+                    'sampai_tanggal' => $sampai_tanggal,
+                    'alamat_menjalankan_cuti' => $alamat_menjalankan_cuti,
+                    'status_cuti' => 0,
+                    'date_created' => time()
+                ];
+
+                $this->db->insert('cuti', $data);
+            }
+
+            $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Cuti berhasil ditambahkan! ',
+                    icon: 'success'
+                    });
+                </script>");
+            redirect('admin/cuti');
+        }
+    }
+    public function aksi_ajukan_cuti()
+    {
     }
 }
