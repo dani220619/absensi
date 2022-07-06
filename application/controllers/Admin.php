@@ -1109,6 +1109,7 @@ class Admin extends CI_Controller
     public function cuti()
     {
         $data['pegawai'] = $this->Mod_admin->get_pegawai()->result_array();
+        $data['jenis_cuti'] = $this->db->get('jenis_cuti')->result_array();
         $data['users'] = $this->db->get_where(
             'users',
             ['username' => $this->session->userdata('username')]
@@ -1232,7 +1233,17 @@ class Admin extends CI_Controller
             redirect('admin/cuti');
         }
     }
-    public function aksi_ajukan_cuti()
+    public function cetak_formulir_cuti($id)
     {
+        $data['users'] = $this->db->get_where(
+            'users',
+            ['username' => $this->session->userdata('username')]
+        )->row_array();
+
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('admin/cetak_formulir_cuti', $data);
+        $this->load->view('template/footer');
     }
 }

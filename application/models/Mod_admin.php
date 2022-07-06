@@ -147,7 +147,7 @@ class Mod_admin extends CI_Model
     }
     public function get_pegawai()
     {
-        $this->db->select('users.id, users.nip,users.nama_lengkap, jenis_cuti.jenis_cuti, cuti.status_cuti');
+        $this->db->select('users.id, cuti.id as id_cuti, users.nip,users.nama_lengkap, jenis_cuti.jenis_cuti, cuti.status_cuti');
         $this->db->from('users');
         $this->db->join('pegawai', 'users.nip = pegawai.nip');
         $this->db->join('cuti', 'cuti.id_user = users.id');

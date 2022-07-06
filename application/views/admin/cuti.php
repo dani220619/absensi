@@ -9,12 +9,24 @@
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
-                            <select class="custom-select mb-3">
-                                <option selected>Pilih Jenis Cuti</option>
-                                <?php foreach ($jenis_cuti as $jc) : ?>
-                                    <option value="<?= $jc['id']; ?>"><?= $jc['jenis_cuti']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <div class="form-group">
+                                <label for="nama_pegawai">Nama Pegawai</label>
+                                <select class="custom-select mb-3 js-example-basic-multiple-limit" name="nama_pegawai" required>
+                                    <option value="" selected>Nama Pegawai</option>
+                                    <?php foreach ($pegawai as $pgw) : ?>
+                                        <option value="<?= $pgw['id']; ?>"><?= $pgw['nama_lengkap']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis_cuti">Jenis Cuti</label>
+                                <select class="custom-select mb-3" name="jenis_cuti" required>
+                                    <option value="" selected>Pilih Jenis Cuti</option>
+                                    <?php foreach ($jenis_cuti as $jc) : ?>
+                                        <option value="<?= $jc['id']; ?>"><?= $jc['jenis_cuti']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -98,6 +110,7 @@
                                                     <?php if ($pgw['status_cuti'] == 0) : ?>
                                                         <a href="" class="text-secondary ml-3" data-toggle="tooltip" data-placement="top" title="Upload Data"><i class="fas fa-upload"></i></a>
                                                     <?php endif; ?>
+                                                    <a href="<?= base_url('admin/cetak_formulir_cuti/') . $pgw['id_cuti'] ?>" class="text-secondary ml-3" data-toggle="tooltip" data-placement="top" title="Download Format"><i class="fas fa-download"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -209,6 +222,7 @@
 </div>
 <script src="<?= base_url() ?>assets/js/core/jquery.3.2.1.min.js"></script>
 </script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#basic-datatables').DataTable({});
@@ -277,4 +291,7 @@
             }
         })
     });
+</script>
+<script>
+    $(".js-example-basic-multiple-limit").select2();
 </script>
